@@ -72,11 +72,11 @@ USER_PASSWORD=user123
 SECRET_KEY=...
 ACCESS_TOKEN_EXPIRE_MINUTES=60
 
-POSTGRES_USER=bgt
-POSTGRES_PASSWORD=bgt_secret
-POSTGRES_DB=bgt_db
-
-DATABASE_URL=postgresql+psycopg2://bgt:bgt_secret@db:5432/bgt_db
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_DB=
+POSTGRES_HOST=
+POSTGRES_PORT=
 ```
 
 Admin account is created automatically from environment variables on first login.
@@ -115,10 +115,10 @@ src/
 
 ### Authentication
 
-| Method | Route                | Description             |
-| ------ | -------------------- | ----------------------- |
-| POST   | `/api/auth/register` | Register a new user     |
-| POST   | `/api/auth/login`    | Login and get JWT token |
+ Method | Route                 Description             
+
+ POST    `/api/auth/register`  Register a new user     
+ POST    `/api/auth/login`     Login and get JWT token 
 
 Example:
 
