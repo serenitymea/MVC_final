@@ -1,4 +1,4 @@
-# Board Game Tracker
+# Game Tracker
 
 Learning project made with FastAPI, React and TypeScript.
 
@@ -6,7 +6,7 @@ Built mainly to understand how MVC architecture works in a real application inst
 
 ## What is it
 
-Simple web app for tracking board games.
+Simple web app for tracking games.
 
 Anyone can view the list of games without registration.
 

@@ -38,7 +38,7 @@ export default function App() {
         <div style={s.logoBlock}>
           <div style={s.logoRule} />
           <div>
-            <div style={s.logoTitle}>Board Game Tracker</div>
+            <div style={s.logoTitle}>Game Tracker</div>
             <div style={s.logoSub}>personal collection log</div>
           </div>
         </div>
@@ -93,7 +93,7 @@ export default function App() {
       </main>
 
       <footer style={s.footer}>
-        Board Game Tracker: MVC project
+        Game Tracker: MVC project
       </footer>
     </div>
   );

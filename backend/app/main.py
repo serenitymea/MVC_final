@@ -7,7 +7,7 @@ from app.routers import auth, games
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Board Game Tracker")
+app = FastAPI(title="Game Tracker")
 
 app.add_middleware(
     CORSMiddleware,
