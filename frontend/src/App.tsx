@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { fetchGames } from "./api";
 import { Game, AuthUser } from "./types";
 import GameTable from "./components/GameTable";
@@ -10,9 +10,16 @@ export default function App() {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [showAuth, setShowAuth] = useState(false);
 
-  useEffect(() => {
-    fetchGames().then(setGames);
-  }, []);
+  async function handleAuth(u: AuthUser) {
+    setUser(u);
+    setShowAuth(false);
+    setGames(await fetchGames(u.token));
+  }
+
+  function handleSignOut() {
+    setUser(null);
+    setGames([]);
+  }
 
   const avgRating = games.length
     ? (games.reduce((a, g) => a + g.rating, 0) / games.length).toFixed(1)
@@ -22,7 +29,7 @@ export default function App() {
     <div style={s.page}>
       {showAuth && (
         <AuthModal
-          onAuth={(u) => { setUser(u); setShowAuth(false); }}
+          onAuth={handleAuth}
           onClose={() => setShowAuth(false)}
         />
       )}
@@ -38,9 +45,8 @@ export default function App() {
         <nav style={s.nav}>
           {user ? (
             <>
-              {user.role === "admin" && <span style={s.roleTag}>ADMIN</span>}
               <span style={s.navUser}>{user.username}</span>
-              <button style={s.navBtn} onClick={() => setUser(null)}>Sign out</button>
+              <button style={s.navBtn} onClick={handleSignOut}>Sign out</button>
             </>
           ) : (
             <button style={s.navBtnPrimary} onClick={() => setShowAuth(true)}>
@@ -121,11 +127,6 @@ const s: Record<string, React.CSSProperties> = {
   logoSub: { fontSize: "0.7rem", color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginTop: 2 },
   nav: { display: "flex", alignItems: "center", gap: "1rem" },
   navUser: { fontSize: "0.88rem", color: "var(--ink)", fontFamily: "var(--mono)" },
-  roleTag: {
-    fontSize: "0.65rem", letterSpacing: "0.12em", fontWeight: 700,
-    color: "var(--paper)", background: "var(--accent)",
-    padding: "2px 7px",
-  },
   navBtn: {
     background: "none", border: "1px solid var(--border)",
     color: "var(--muted)", cursor: "pointer", padding: "0.35rem 0.9rem",

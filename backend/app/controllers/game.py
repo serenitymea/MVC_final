@@ -6,8 +6,8 @@ from app.models.game import Game
 from app.schemas.game import GameCreate, GameUpdate
 
 
-def list_games(db: Session) -> list[Game]:
-    return db.query(Game).all()
+def list_games(db: Session, owner: str) -> list[Game]:
+    return db.query(Game).filter(Game.owner == owner).all()
 
 
 def create_game(db: Session, data: GameCreate, owner: str) -> Game:
@@ -18,11 +18,11 @@ def create_game(db: Session, data: GameCreate, owner: str) -> Game:
     return game
 
 
-def update_game(db: Session, game_id: int, data: GameUpdate, username: str, role: str) -> Game:
+def update_game(db: Session, game_id: int, data: GameUpdate, username: str) -> Game:
     game = db.get(Game, game_id)
     if not game:
         raise HTTPException(status_code=404, detail="Game not found")
-    if role != "admin" and game.owner != username:
+    if game.owner != username:
         raise HTTPException(status_code=403, detail="Not your game")
     game.rating = data.rating
     game.completed = data.completed
@@ -31,11 +31,11 @@ def update_game(db: Session, game_id: int, data: GameUpdate, username: str, role
     return game
 
 
-def delete_game(db: Session, game_id: int, username: str, role: str) -> None:
+def delete_game(db: Session, game_id: int, username: str) -> None:
     game = db.get(Game, game_id)
     if not game:
         raise HTTPException(status_code=404, detail="Game not found")
-    if role != "admin" and game.owner != username:
+    if game.owner != username:
         raise HTTPException(status_code=403, detail="Not your game")
     db.delete(game)
     db.commit()

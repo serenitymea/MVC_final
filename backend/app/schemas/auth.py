@@ -15,4 +15,4 @@ class TokenOut(BaseModel):
     access_token: str
     token_type: str = "bearer"
     username: str
-    role: str   # admin and user
+    role: str

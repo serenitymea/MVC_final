@@ -30,8 +30,11 @@ export async function register(username: string, password: string) {
   return res.json();
 }
 
-export async function fetchGames() {
-  const res = await fetch(`${BASE}/games/`);
+export async function fetchGames(token: string) {
+  const res = await fetch(`${BASE}/games/`, {
+    headers: headers(token),
+  });
+  if (!res.ok) throw new Error("Failed to load games");
   return res.json();
 }
 

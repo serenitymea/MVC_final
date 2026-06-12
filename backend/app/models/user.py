@@ -9,4 +9,4 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, nullable=False, index=True)
     hashed_password = Column(String, nullable=False)
-    role = Column(String, default="user")   # admin ad "user
+    role = Column(String, default="user")

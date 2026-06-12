@@ -5,15 +5,14 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.schemas.game import GameCreate, GameUpdate, GameOut
 from app.controllers import game as ctrl
-from app.controllers.auth import get_current_user, require_auth
+from app.controllers.auth import require_auth
 
 router = APIRouter(prefix="/api/games", tags=["games"])
 
 
 @router.get("/", response_model=list[GameOut])
-def get_games(db: Session = Depends(get_db)):
-    """Public — everyone can read."""
-    return ctrl.list_games(db)
+def get_games(db: Session = Depends(get_db), user=Depends(require_auth)):
+    return ctrl.list_games(db, owner=user["username"])
 
 
 @router.post("/", response_model=GameOut, status_code=201)
@@ -32,7 +31,7 @@ def edit_game(
     db: Session = Depends(get_db),
     user=Depends(require_auth),
 ):
-    return ctrl.update_game(db, game_id, body, user["username"], user["role"])
+    return ctrl.update_game(db, game_id, body, user["username"])
 
 
 @router.delete("/{game_id}", status_code=204)
@@ -41,4 +40,4 @@ def remove_game(
     db: Session = Depends(get_db),
     user=Depends(require_auth),
 ):
-    ctrl.delete_game(db, game_id, user["username"], user["role"])
+    ctrl.delete_game(db, game_id, user["username"])

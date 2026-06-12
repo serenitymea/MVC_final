@@ -13,7 +13,7 @@ export default function GameRow({ game, user, onChange, onDelete }: Props) {
   const [rating, setRating] = useState(game.rating);
   const [saving, setSaving] = useState(false);
 
-  const canEdit = user && (user.role === "admin" || user.username === game.owner);
+  const canEdit = user && user.username === game.owner;
 
   async function save(patch: { rating: number; completed: boolean }) {
     if (!canEdit) return;
