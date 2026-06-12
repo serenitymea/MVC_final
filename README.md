@@ -1,6 +1,9 @@
 # Game Tracker
 
-Learning project made with FastAPI, React and TypeScript.
+<img width="1919" height="928" alt="image" src="https://github.com/user-attachments/assets/df121c16-17e9-4d81-857e-fd04ed82d8d0" />
+
+
+Project made with FastAPI, React and TypeScript.
 
 Built mainly to understand how MVC architecture works in a real application instead of only reading about it.
 
